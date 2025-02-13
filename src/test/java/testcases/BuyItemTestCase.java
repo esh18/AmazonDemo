@@ -25,8 +25,9 @@ public class BuyItemTestCase extends BaseTest {
 
 		if (driver.getPageSource().contains("Enter the characters you see below")) {
 			Thread.sleep(30000);
+			System.out.println("Captcha found.");
 		} else {
-			Thread.sleep(5000);
+			System.out.println("No captcha found.");
 		}
 
 	}
@@ -37,7 +38,6 @@ public class BuyItemTestCase extends BaseTest {
 
 		objBuyItemPage.txtSearch().sendKeys("Watch");
 		objBuyItemPage.btnSearch().click();
-		Thread.sleep(5000);
 	}
 
 	@Test
@@ -57,11 +57,9 @@ public class BuyItemTestCase extends BaseTest {
 				objBuyItemPage.sliderUpper());
 		js.executeScript("arguments[0].dispatchEvent(new Event('change', { bubbles: true }));",
 				objBuyItemPage.sliderUpper());
-		Thread.sleep(2000);
 
 		objBuyItemPage.btnPrice().click();
 
-		Thread.sleep(5000);
 	}
 
 	@Test
@@ -71,11 +69,8 @@ public class BuyItemTestCase extends BaseTest {
 		Actions actions = new Actions(driver);
 		actions.scrollByAmount(0, 1500).perform();
 
-		Thread.sleep(2000);
-
-		List<WebElement> eleBtnColor = objBuyItemPage.btnColor();
+		List<WebElement> eleBtnColor = objBuyItemPage.btnColorList();
 		eleBtnColor.get(1).click();
-		Thread.sleep(2000);
 
 	}
 
@@ -86,33 +81,30 @@ public class BuyItemTestCase extends BaseTest {
 
 		do {
 			actions.scrollByAmount(0, 500).perform();
-			Thread.sleep(2000);
 		} while (!driver.getPageSource().contains("Titan"));
 
 		if (driver.getPageSource().contains("Titan")) {
-			List<WebElement> eleLblTitan = objBuyItemPage.checkTitian();
+			List<WebElement> eleLblTitan = objBuyItemPage.checkTitanList();
 			eleLblTitan.get(1).click();
 		}
 
 		SwitchWindowToChild();
 		objBuyItemPage.btnAddToCart().click();
-		Thread.sleep(2000);
 
-		if (driver.getPageSource().contains("Titan")) {
+		if (driver.getPageSource().contains(" Extended Warranty ")) {
 			objBuyItemPage.btnSkip().click();
 		}
 
-		Thread.sleep(2000);
-
 		SwitchWindowToParent();
 
-		List<WebElement> eleBtnAddToCartRandom = objBuyItemPage.btnAddToCartRandom();
+		closeAllChildWindows();
+
+		List<WebElement> eleBtnAddToCartRandom = objBuyItemPage.btnAddToCartRandomList();
 		eleBtnAddToCartRandom.get(7).click();
-		Thread.sleep(2000);
 
 		eleBtnAddToCartRandom.get(8).click();
 
-		Thread.sleep(10000);
+		Thread.sleep(5000);
 
 	}
 
@@ -120,25 +112,23 @@ public class BuyItemTestCase extends BaseTest {
 	public void test005IncreaseItemNumber() throws InterruptedException {
 		objBuyItemPage = new BuyItemPage(driver);
 
-		List<WebElement> eleIncreaseItem = objBuyItemPage.ddIncreaseItem();
+		List<WebElement> eleIncreaseItem = objBuyItemPage.ddIncreaseItemList();
 
 		Select dropdownItemNumber = new Select(eleIncreaseItem.get(1));
 		dropdownItemNumber.selectByValue("2");
-		Thread.sleep(5000);
 	}
 
 	@Test
-	public void test005GoToCartAndBuy() throws InterruptedException {
+	public void test006GoToCartAndBuy() throws InterruptedException {
 		objBuyItemPage = new BuyItemPage(driver);
 
-		objBuyItemPage.page1().sendKeys(Keys.HOME);
-		Thread.sleep(2000);
+		objBuyItemPage.pageBody().sendKeys(Keys.HOME);
 
 		objBuyItemPage.btnMainCart().click();
-		Thread.sleep(5000);
+		Thread.sleep(2000);
 
 		objBuyItemPage.btnBuy().click();
-		Thread.sleep(2000);
+
 	}
 
 	@AfterClass

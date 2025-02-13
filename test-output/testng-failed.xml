@@ -6,6 +6,7 @@
       <class name="testcases.BuyItemTestCase">
         <methods>
           <include name="test005IncreaseItemNumber"/>
+          <include name="test006GoToCartAndBuy"/>
           <include name="endTest"/>
           <include name="openBrowser"/>
         </methods>

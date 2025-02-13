@@ -1,113 +1,162 @@
 package pageobjects;
 
 import java.util.List;
-
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
+import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+import java.time.Duration;
 
 public class BuyItemPage {
 
 	public WebDriver driver;
-	private By txtSearch = By.id("twotabsearchtextbox");
-	private By btnSearch = By.id("nav-search-submit-button");
-	private By sliderLower = By.id("p_36/range-slider_slider-item_lower-bound-slider");
-	private By sliderUpper = By.id("p_36/range-slider_slider-item_upper-bound-slider");
-	private By btnAddToCart = By.id("add-to-cart-button");
-	private By checkTitan = By.xpath("//a[contains(@href,'Titan')]");
-	private By btnGoToCart = By.id("nav-cart-count-container");
-	private By btnProceedToBuy = By.name("proceedToRetailCheckout");
-	private By btnPrice = By.xpath("//input[@aria-label='Go - Submit price range']");
-	private By btnSkip = By.xpath(
-			"//span[@class='a-button-inner']/input[@class='a-button-input' and @aria-labelledby='attachSiNoCoverage-announce']");
-	private By page1 = By.tagName("body");
-	private By btnMainCart = By.id("nav-cart-count-container");
-	private By btnBuy = By.xpath("//input[@value='Proceed to checkout']");
+	private WebDriverWait wait; // Add WebDriverWait
 
 	public BuyItemPage(WebDriver driver) {
 		this.driver = driver;
+		this.wait = new WebDriverWait(driver, Duration.ofSeconds(15)); // Initialize wait
+		PageFactory.initElements(driver, this);
 	}
 
+	@FindBy(id = "twotabsearchtextbox")
+	private WebElement txtSearch;
+
+	@FindBy(id = "nav-search-submit-button")
+	private WebElement btnSearch;
+
+	@FindBy(id = "p_36/range-slider_slider-item_lower-bound-slider")
+	private WebElement sliderLower;
+
+	@FindBy(id = "p_36/range-slider_slider-item_upper-bound-slider")
+	private WebElement sliderUpper;
+
+	@FindBy(id = "add-to-cart-button")
+	private WebElement btnAddToCart;
+
+	@FindBy(xpath = "//a[contains(@href,'Titan')]")
+	private WebElement checkTitan;
+
+	@FindBy(id = "nav-cart-count-container")
+	private WebElement btnGoToCart;
+
+	@FindBy(name = "proceedToRetailCheckout")
+	private WebElement btnProceedToBuy;
+
+	@FindBy(xpath = "//input[@aria-label='Go - Submit price range']")
+	private WebElement btnPrice;
+
+	@FindBy(xpath = "//span[@class='a-button-inner']/input[@class='a-button-input' and @aria-labelledby='attachSiNoCoverage-announce']")
+	private WebElement btnSkip;
+
+	@FindBy(tagName = "body")
+	private WebElement pageBody;
+
+	@FindBy(id = "nav-cart-count-container")
+	private WebElement btnMainCart;
+
+	@FindBy(xpath = "//input[@value='Proceed to checkout']")
+	private WebElement btnBuy;
+
+	@FindBy(xpath = "//a[contains(@href,'Titan')]")
+	private List<WebElement> checkTitanList;
+
+	@FindBy(xpath = "//span[@class='a-button-text a-declarative']")
+	private List<WebElement> ddItemList;
+
+	@FindBy(xpath = "//a[@title='Grey']/child::span/child::div")
+	private List<WebElement> btnColorList;
+
+	@FindBy(xpath = "//a[contains(@href,'Titan')]")
+	private List<WebElement> lblTitanList;
+
+	@FindBy(xpath = "//button[text()='Add to cart']")
+	private List<WebElement> btnAddToCartRandomList;
+
+	@FindBy(xpath = "//select[@id='quantity-selector']")
+	private List<WebElement> ddIncreaseItemList;
+
+	// Methods with wait before returning elements
+
 	public WebElement txtSearch() {
-		return driver.findElement(txtSearch);
+		return wait.until(ExpectedConditions.visibilityOf(txtSearch));
 	}
 
 	public WebElement btnSearch() {
-		return driver.findElement(btnSearch);
+		return wait.until(ExpectedConditions.elementToBeClickable(btnSearch));
 	}
 
 	public WebElement sliderLower() {
-		return driver.findElement(sliderLower);
+		return wait.until(ExpectedConditions.visibilityOf(sliderLower));
 	}
 
 	public WebElement sliderUpper() {
-		return driver.findElement(sliderUpper);
+		return wait.until(ExpectedConditions.visibilityOf(sliderUpper));
 	}
 
 	public WebElement btnAddToCart() {
-		return driver.findElement(btnAddToCart);
+		return wait.until(ExpectedConditions.elementToBeClickable(btnAddToCart));
 	}
 
 	public WebElement checkTitan() {
-		return driver.findElement(checkTitan);
-	}
-
-	public List<WebElement> checkTitian() {
-		List<WebElement> eleCheckTitan = driver.findElements(By.xpath("//a[contains(@href,'Titan')]"));
-		return eleCheckTitan;
-	}
-
-	public List<WebElement> ddItem() {
-		List<WebElement> eleddItem = driver.findElements(By.xpath("//span[@class='a-button-text a-declarative']"));
-		return eleddItem;
-	}
-
-	public List<WebElement> btnColor() {
-		List<WebElement> elebtnColor = driver.findElements(By.xpath("//a[@title='Grey']/child::span/child::div"));
-		return elebtnColor;
-	}
-
-	public List<WebElement> lblTitan() {
-		List<WebElement> elelblTitan = driver.findElements(By.xpath("//a[contains(@href,'Titan')]"));
-		return elelblTitan;
-	}
-
-	public List<WebElement> btnAddToCartRandom() {
-		List<WebElement> elebtnAddToCartRandom = driver.findElements(By.xpath("//button[text()='Add to cart']"));
-		return elebtnAddToCartRandom;
-	}
-
-	public List<WebElement> ddIncreaseItem() {
-		List<WebElement> eleddIncreaseItem = driver.findElements(By.xpath("//select[@id='quantity-selector']"));
-		return eleddIncreaseItem;
+		return wait.until(ExpectedConditions.visibilityOf(checkTitan));
 	}
 
 	public WebElement btnGoToCart() {
-		return driver.findElement(btnGoToCart);
+		return wait.until(ExpectedConditions.elementToBeClickable(btnGoToCart));
 	}
 
 	public WebElement btnProceedToBuy() {
-		return driver.findElement(btnProceedToBuy);
+		return wait.until(ExpectedConditions.elementToBeClickable(btnProceedToBuy));
 	}
 
 	public WebElement btnPrice() {
-		return driver.findElement(btnPrice);
+		return wait.until(ExpectedConditions.elementToBeClickable(btnPrice));
 	}
 
 	public WebElement btnSkip() {
-		return driver.findElement(btnSkip);
+		return wait.until(ExpectedConditions.elementToBeClickable(btnSkip));
 	}
 
-	public WebElement page1() {
-		return driver.findElement(page1);
+	public WebElement pageBody() {
+		return wait.until(ExpectedConditions.visibilityOf(pageBody));
 	}
 
 	public WebElement btnMainCart() {
-		return driver.findElement(btnMainCart);
+		return wait.until(ExpectedConditions.elementToBeClickable(btnMainCart));
 	}
 
 	public WebElement btnBuy() {
-		return driver.findElement(btnBuy);
+		return wait.until(ExpectedConditions.elementToBeClickable(btnBuy));
 	}
 
+	public List<WebElement> checkTitanList() {
+		wait.until(ExpectedConditions.visibilityOfAllElements(checkTitanList));
+		return checkTitanList;
+	}
+
+	public List<WebElement> ddItemList() {
+		wait.until(ExpectedConditions.visibilityOfAllElements(ddItemList));
+		return ddItemList;
+	}
+
+	public List<WebElement> btnColorList() {
+		wait.until(ExpectedConditions.visibilityOfAllElements(btnColorList));
+		return btnColorList;
+	}
+
+	public List<WebElement> lblTitanList() {
+		wait.until(ExpectedConditions.visibilityOfAllElements(lblTitanList));
+		return lblTitanList;
+	}
+
+	public List<WebElement> btnAddToCartRandomList() {
+		wait.until(ExpectedConditions.visibilityOfAllElements(btnAddToCartRandomList));
+		return btnAddToCartRandomList;
+	}
+
+	public List<WebElement> ddIncreaseItemList() {
+		wait.until(ExpectedConditions.visibilityOfAllElements(ddIncreaseItemList));
+		return ddIncreaseItemList;
+	}
 }
